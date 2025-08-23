@@ -12,3 +12,6 @@ Supports GET, POST, PUT, DELETE requests, handles cookies for authentication, an
 
 ## ⚠️ Note: 
 - params field is not added → must include full query string in URL (e.g. https://api.com/users?id=123)
+
+## 🌍 Live Demo  
+🔗 [Click here to try the project](https://postman-lite-nfhf.vercel.app)
