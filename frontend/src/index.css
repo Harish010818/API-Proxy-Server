@@ -27,6 +27,7 @@ body {
   padding: 0;
   min-height: 100vh;
   background-color: var(--bg-color);
+  overflow-y: hidden;
 }
 
 /* ---------- Layout ---------- */
