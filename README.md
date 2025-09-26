@@ -1,5 +1,5 @@
 # 🌐 API Proxy Server
-A simple Node.js + Express based proxy server that can send requests to any API in the world.
+A simple Node.js + Express based proxy server that can send requests to and get response of any API request.
 Supports GET, POST, PUT, DELETE requests, handles cookies for authentication, and includes an in-memory cache to optimize repeated requests.
 
 ## 🚀 Features
