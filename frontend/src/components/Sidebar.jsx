@@ -6,6 +6,7 @@ const RequestsHis = ({ reqhistory, autofillHistoryHandler }) => {
 
     return (
         <div className="req-container">
+        <h2>Requests History</h2>    
             {
                 revArr.length > 0 ? revArr.map((payload, idx) => {
                     const str = `${payload.method}: ${payload.url}`;
