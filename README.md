@@ -1,5 +1,5 @@
 # 🌐 API Proxy Server
-A simple Node.js + Express based proxy server that can send requests to any API in the world.
+A simple Node.js + Express based proxy server that can send requests to and get response of any API request.
 Supports GET, POST, PUT, DELETE requests, handles cookies for authentication, and includes an in-memory cache to optimize repeated requests.
 
 ## 🚀 Features
@@ -12,3 +12,6 @@ Supports GET, POST, PUT, DELETE requests, handles cookies for authentication, an
 
 ## ⚠️ Note: 
 - params field is not added → must include full query string in URL (e.g. https://api.com/users?id=123)
+
+## 🌍 Live Demo  
+🔗 [Click here to try the project](https://postman-lite-nfhf.vercel.app)
