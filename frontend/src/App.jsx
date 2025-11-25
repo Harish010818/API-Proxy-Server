@@ -17,11 +17,8 @@ function App() {
 
   const [headerKey, setHeaderKey] = useState("");
   const [headerValue, setHeaderValue] = useState("");
-
   const [bodyText, setBodyText] = useState("");
-
   const [res, setRes] = useState("");
-
   const [reqhistory, setReqHistory] = useState([]);
 
 
@@ -29,7 +26,6 @@ function App() {
     const data = JSON.parse(localStorage.getItem("req")) || [];
     setReqHistory(data);
   }, [])
-
 
 
   //Handle url/method
@@ -98,7 +94,6 @@ function App() {
 
       const result = await response.json();
       
-
       if (result.data) {
         if(typeof result.data === "object"){
           setRes(JSON.stringify(result.data, null, 2)); // pretty JSON

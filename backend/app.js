@@ -15,9 +15,8 @@ app.use(cors({
 app.use(express.json());
 
 
-// Simple in-memory cache { "GET::https://api.com/users": { data, timestamp } }
 const cache = {};
-const CACHE_TTL = 60 * 1000; // 1 minute TTL (can adjust)
+const CACHE_TTL = 60 * 1000;
 
 app.post("/request", async (req, res) => {
   let { url, method, headers, body } = req.body;
@@ -43,7 +42,7 @@ app.post("/request", async (req, res) => {
       method,
       headers: {
         ...headers,
-        cookie: cookieHeader || ""   // 👈 forward cookies to target API
+        cookie: cookieHeader || ""   // forward cookies to target API
       },
       withCredentials: true
     };
