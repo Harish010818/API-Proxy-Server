@@ -159,3 +159,41 @@ button:active {
 ::-webkit-scrollbar-thumb:hover {
   background: #b5b5b5;
 }
+
+
+
+.response {
+  margin-top: 20px;
+}
+
+/* flex row for heading + time + status */
+.response-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 430px;
+}
+
+/* right side container */
+.response-meta {
+  display: flex;
+  gap: 50px; /* good space between time & status */
+  font-size: 14px;
+}
+
+
+/* COLORS */
+.time {
+  color: green;
+  font-weight: 600;
+}
+
+.status.success {
+  color: green;
+  font-weight: 600;
+}
+
+.status.error {
+  color: red;
+  font-weight: 600;
+}

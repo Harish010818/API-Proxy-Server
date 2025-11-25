@@ -12,7 +12,7 @@ function App() {
     method: "GET",
     headers: {},
     body: {}
-    // params: {},
+  //params: {},
   });
 
   const [headerKey, setHeaderKey] = useState("");
@@ -20,6 +20,8 @@ function App() {
   const [bodyText, setBodyText] = useState("");
   const [res, setRes] = useState("");
   const [reqhistory, setReqHistory] = useState([]);
+  const [status, setStatus] = useState("");
+  const [time, setTime] = useState(3000);
 
 
   useEffect(() => {
@@ -85,18 +87,20 @@ function App() {
     localStorage.setItem("req", JSON.stringify(storeReqs));
 
     try {
+      console.time("time");
       const response = await fetch(`${import.meta.env.VITE_API_URL}/request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
         credentials: "include"
       });
-
+      console.timeEnd("time");
       const result = await response.json();
-      
+      console.log(result);
       if (result.data) {
         if(typeof result.data === "object"){
           setRes(JSON.stringify(result.data, null, 2)); // pretty JSON
+          setStatus(result.status);
         } else {
           setRes("Error: " + JSON.stringify(result.data, null, 2));
         }
@@ -108,8 +112,8 @@ function App() {
     }
   };
 
-  const autofillHistoryHandler = (data) => {
 
+  const autofillHistoryHandler = (data) => {
     setPayLoad((prevState) => ({
       ...prevState,
       url: data.url,
@@ -166,7 +170,9 @@ function App() {
           bodyText={bodyText}
           bodyChangeHandler={bodyChangeHandler}
           res={res}
-          setRes={setRes}   
+          setRes={setRes}
+          time={time}
+          status={status}   
         />   
       </div>
     </>
