@@ -11,8 +11,7 @@ function App() {
     url: "",
     method: "GET",
     headers: {},
-    body: {}
-  //params: {},
+    body: {},
   });
 
   const [headerKey, setHeaderKey] = useState("");
@@ -20,16 +19,10 @@ function App() {
   const [bodyText, setBodyText] = useState("");
   const [res, setRes] = useState("");
   const [reqhistory, setReqHistory] = useState([]);
-  const [status, setStatus] = useState("");
-  const [time, setTime] = useState(3000);
+  const [status, setStatus] = useState("Null");
+  const [time, setTime] = useState("0");
 
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("req")) || [];
-    setReqHistory(data);
-  }, [])
-
-
+  
   //Handle url/method
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,13 +42,10 @@ function App() {
         ...prevState,
         body: body,
       }));
-
-
     } catch (error) {
       console.error("Invalid JSON format in body");
     }
   };
-
 
   // Add header
   const addHeader = () => {
@@ -73,7 +63,7 @@ function App() {
     }
   };
 
-  // Send request
+  // Send request handler
   const sendRequestHandler = async (e) => {
     e.preventDefault();
 
@@ -82,49 +72,55 @@ function App() {
       return;
     }
 
-    const storeReqs = [...reqhistory, payload]
+    const storeReqs = [...reqhistory, payload];
     setReqHistory(storeReqs);
     localStorage.setItem("req", JSON.stringify(storeReqs));
 
     try {
-      console.time("time");
+      const start = performance.now(); //start time
+
       const response = await fetch(`${import.meta.env.VITE_API_URL}/request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-        credentials: "include"
+        credentials: "include",
       });
-      console.timeEnd("time");
+
+      const end = performance.now(); // end time
+      const total = (end - start).toFixed(2);
+
+      setTime(total); // show in UI
+
       const result = await response.json();
       console.log(result);
+
       if (result.data) {
-        if(typeof result.data === "object"){
-          setRes(JSON.stringify(result.data, null, 2)); // pretty JSON
-          setStatus(result.status);
+        if (typeof result.data === "object") {
+          setRes(JSON.stringify(result.data, null, 2));
+          setStatus(result.status); // show status
         } else {
           setRes("Error: " + JSON.stringify(result.data, null, 2));
         }
       } else {
-        setRes("Error: Could not send request")
+        setRes("Error: Could not send request");
       }
     } catch (err) {
       setRes("Error: " + JSON.stringify(err?.message, null, 2));
     }
   };
 
-
+  // autofill history on the form handler
   const autofillHistoryHandler = (data) => {
     setPayLoad((prevState) => ({
       ...prevState,
       url: data.url,
-      method: data.method
-    }))
+      method: data.method,
+    }));
 
     const objHeader = data.headers;
     if (objHeader && Object.keys(objHeader).length > 0) {
       setHeaderKey(Object.keys(objHeader)[0]);
       setHeaderValue(Object.values(objHeader)[0]);
-
     } else {
       setHeaderKey("");
       setHeaderValue("");
@@ -134,22 +130,29 @@ function App() {
     if (objBody && Object.keys(objBody).length > 0) {
       setPayLoad((prevState) => ({
         ...prevState,
-        body: objBody
+        body: objBody,
       }));
 
       setBodyText(JSON.stringify(objBody, null, 2));
     } else {
       setPayLoad((prevState) => ({
         ...prevState,
-        body: {}
+        body: {},
       }));
       setBodyText("");
     }
 
     console.log(payload);
     setRes("");
-  }
+  };
 
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("req")) || [];
+    setReqHistory(data);
+  }, []);
+
+  
   return (
     <>
       <div className="main-container">
@@ -158,7 +161,7 @@ function App() {
           autofillHistoryHandler={autofillHistoryHandler}
         />
 
-        <MainContainer 
+        <MainContainer
           payload={payload}
           handleChange={handleChange}
           sendRequestHandler={sendRequestHandler}
@@ -172,8 +175,8 @@ function App() {
           res={res}
           setRes={setRes}
           time={time}
-          status={status}   
-        />   
+          status={status}
+        />
       </div>
     </>
   );

@@ -82,12 +82,9 @@ const MainContainer = ({
         <div className="response">
   <div className="response-header">
     <h3>Response below here :</h3>
-
     <div className="response-meta">
-      <h3>
-        Status : <span className={`status ${status === 200 ? "success" : "error"}`}>{status}</span>
-      </h3>
-      <h3>Total time : <span className="time">{time}</span></h3> 
+      <h3>Status : <span className={`status ${status === 200 ? "success" : "error"}`}>{status}</span></h3>
+      <h3>Total time : <span className="time">{time}ms</span></h3> 
     </div>
   </div>
 

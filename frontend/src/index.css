@@ -161,7 +161,6 @@ button:active {
 }
 
 
-
 .response {
   margin-top: 20px;
 }
@@ -171,13 +170,13 @@ button:active {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
-  gap: 430px;
+  gap: 330px;
 }
 
 /* right side container */
 .response-meta {
   display: flex;
-  gap: 50px; /* good space between time & status */
+  gap: 60px; /* good space between time & status */
   font-size: 14px;
 }
 
@@ -194,6 +193,6 @@ button:active {
 }
 
 .status.error {
-  color: red;
+  color: rgb(237, 52, 52);
   font-weight: 600;
 }
