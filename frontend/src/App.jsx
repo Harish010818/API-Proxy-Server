@@ -8,14 +8,15 @@ function App() {
 
   // Payload
   const [payload, setPayLoad] = useState({
-    url: "",
     method: "GET",
+    url: "",
     headers: {},
     body: {},
   });
 
   const [headerKey, setHeaderKey] = useState("");
   const [headerValue, setHeaderValue] = useState("");
+
   const [bodyText, setBodyText] = useState("");
   const [res, setRes] = useState("");
   const [reqhistory, setReqHistory] = useState([]);
@@ -26,11 +27,29 @@ function App() {
   //Handle url/method
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPayLoad((prevState) => ({
-      ...prevState,
+    setPayLoad((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
+  
+
+const addHeader = () => {
+  if (!headerKey || !headerValue) return;
+
+  setPayLoad(prev => ({
+    ...prev,
+    headers: {
+      ...prev.headers,
+      [headerKey]: headerValue,
+    }
+  }));
+
+  toast.success("Header Added");
+  setHeaderKey("");
+  setHeaderValue("");
+};
+
 
   // Body change
   const bodyChangeHandler = (e) => {
@@ -38,8 +57,8 @@ function App() {
     try {
       const body = JSON.parse(e.target.value);
 
-      setPayLoad((prevState) => ({
-        ...prevState,
+      setPayLoad((prev) => ({
+        ...prev,
         body: body,
       }));
     } catch (error) {
@@ -47,21 +66,6 @@ function App() {
     }
   };
 
-  // Add header
-  const addHeader = () => {
-    if (headerKey && headerValue) {
-      setPayLoad((prevState) => ({
-        ...prevState,
-        headers: {
-          ...prevState.headers,
-          [headerKey]: headerValue,
-        },
-      }));
-      toast.success("Headers Added");
-      setHeaderKey("");
-      setHeaderValue("");
-    }
-  };
 
   // Send request handler
   const sendRequestHandler = async (e) => {
@@ -92,57 +96,58 @@ function App() {
       setTime(total); // show in UI
 
       const result = await response.json();
-      console.log(result);
 
       if (result.data) {
         if (typeof result.data === "object") {
           setRes(JSON.stringify(result.data, null, 2));
-          setStatus(result.status); // show status
         } else {
           setRes("Error: " + JSON.stringify(result.data, null, 2));
         }
       } else {
         setRes("Error: Could not send request");
       }
+      setStatus(result.status); // show status
     } catch (err) {
       setRes("Error: " + JSON.stringify(err?.message, null, 2));
+      setStatus(result.status); // show status
     }
   };
 
+
   // autofill history on the form handler
   const autofillHistoryHandler = (data) => {
-    setPayLoad((prevState) => ({
-      ...prevState,
+    setPayLoad((prev) => ({
+      ...prev,
       url: data.url,
       method: data.method,
     }));
 
-    const objHeader = data.headers;
-    if (objHeader && Object.keys(objHeader).length > 0) {
-      setHeaderKey(Object.keys(objHeader)[0]);
-      setHeaderValue(Object.values(objHeader)[0]);
+    const reqHeaders = data.headers;
+    if (reqHeaders && Object.keys(reqHeaders).length > 0) {
+      setHeaderKey(Object.keys(reqHeaders)[0]);
+      setHeaderValue(Object.values(reqHeaders)[0]);
     } else {
       setHeaderKey("");
       setHeaderValue("");
     }
 
-    const objBody = data.body;
-    if (objBody && Object.keys(objBody).length > 0) {
-      setPayLoad((prevState) => ({
-        ...prevState,
-        body: objBody,
+    const reqBody = data.body;
+    if (reqBody && Object.keys(reqBody).length > 0) {
+      setPayLoad((prev) => ({
+        ...prev,
+        body: reqBody,
       }));
 
-      setBodyText(JSON.stringify(objBody, null, 2));
+      setBodyText(JSON.stringify(reqBody, null, 2));
     } else {
-      setPayLoad((prevState) => ({
-        ...prevState,
+      setPayLoad((prev) => ({
+        ...prev,
         body: {},
       }));
-      setBodyText("");
-    }
 
-    console.log(payload);
+    setBodyText("");
+    }
+    
     setRes("");
   };
 
@@ -152,7 +157,7 @@ function App() {
     setReqHistory(data);
   }, []);
 
-  
+
   return (
     <>
       <div className="main-container">
