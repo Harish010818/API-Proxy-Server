@@ -196,3 +196,43 @@ button:active {
   color: rgb(237, 52, 52);
   font-weight: 600;
 }
+
+.method-select {
+  padding: 6px 10px;
+  font-size: 15px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* Colors like Postman */
+.get {
+  color: #3f8cff;       /* Blue */
+}
+
+.post {
+  color: #4caf50;       /* Green */
+}
+
+.put {
+  color: #ff9800;       /* Orange */
+}
+
+.delete {
+  color: #f44336;       /* Red */
+}
+
+.method-select.get {
+  border: 2px solid #3f8cff;
+}
+
+.method-select.post {
+  border: 2px solid #4caf50;
+}
+
+.method-select.put {
+  border: 2px solid #ff9800;
+}
+
+.method-select.delete {
+  border: 2px solid #f44336;
+}

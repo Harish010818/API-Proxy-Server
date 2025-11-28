@@ -23,11 +23,20 @@ const MainContainer = ({
               id="method"
               name="method"
               onChange={handleChange}
+              className={`method-select ${payload.method.toLowerCase()}`}
             >
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-              <option value="PUT">PUT</option>
-              <option value="DELETE">DELETE</option>
+              <option value="GET" className="get">
+                GET
+              </option>
+              <option value="POST" className="post">
+                POST
+              </option>
+              <option value="PUT" className="put">
+                PUT
+              </option>
+              <option value="DELETE" className="delete">
+                DELETE
+              </option>
             </select>
 
             <input
@@ -80,23 +89,31 @@ const MainContainer = ({
         </form>
 
         <div className="response">
-  <div className="response-header">
-    <h3>Response below here :</h3>
-    <div className="response-meta">
-      <h3>Status : <span className={`status ${status === 200 ? "success" : "error"}`}>{status}</span></h3>
-      <h3>Total time : <span className="time">{time}ms</span></h3> 
-    </div>
-  </div>
+          <div className="response-header">
+            <h3>Response below here :</h3>
+            <div className="response-meta">
+              <h3>
+                Status :{" "}
+                <span
+                  className={`status ${status === 200 ? "success" : "error"}`}
+                >
+                  {status}
+                </span>
+              </h3>
+              <h3>
+                Total time : <span className="time">{time}ms</span>
+              </h3>
+            </div>
+          </div>
 
-  <textarea
-    rows="15"
-    cols="133"
-    value={res}
-    readOnly
-    className={res.startsWith("Error") ? "error" : "success"}
-  />
-</div>
-
+          <textarea
+            rows="15"
+            cols="133"
+            value={res}
+            readOnly
+            className={res.startsWith("Error") ? "error" : "success"}
+          />
+        </div>
       </div>
     </>
   );
